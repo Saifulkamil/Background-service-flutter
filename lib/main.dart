@@ -5,6 +5,7 @@ import 'package:notif/app/modules/home/controllers/home_controller.dart';
 import 'package:notif/permision.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'app/modules/home/views/notif.dart';
 import 'app/routes/app_pages.dart';
 
 Future<void> main() async {
@@ -19,6 +20,7 @@ Future<void> main() async {
     },
   );
   await requestExactAlarmPermission();
+  await NotificationService.initialize();
   await homeC.initializeService();
   runApp(
     GetMaterialApp(

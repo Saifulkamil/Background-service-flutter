@@ -4,11 +4,24 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:get/get.dart';
+import 'package:notif/app/modules/home/views/notif.dart';
+import 'package:notif/app/routes/app_pages.dart';
 
 class HomeController extends GetxController {
+  @override
+  void onInit() {
+    super.onInit();
+    listenToNotifications();
+  }
+
+  Future<void> listenToNotifications() async {
+    print("Listening to notification");
+    NotificationService.onCliknotif.stream.listen((event) {
+      Get.toNamed(Routes.PLAY_VIDEO);
+    });
+  }
 
   RxString seriveText = "Service stop".obs;
-
   Future<void> initializeService() async {
     final service = FlutterBackgroundService();
 
@@ -19,10 +32,11 @@ class HomeController extends GetxController {
         onBackground: onIosBackground,
       ),
       androidConfiguration: AndroidConfiguration(
-
+        
         onStart: onServiceStart,
-        isForegroundMode: false,
-        autoStart: true,
+        isForegroundMode: true,
+        autoStart: false,
+        // foregroundServiceTypes: [AndroidForegroundType.location]
       ),
     );
   }
@@ -38,33 +52,41 @@ class HomeController extends GetxController {
 // Fungsi top-level untuk background service
 @pragma('vm:entry-point')
 void onServiceStart(ServiceInstance service) async {
+  var text = "service background";
+
   DartPluginRegistrant.ensureInitialized();
 
   if (service is AndroidServiceInstance) {
     service.on('setAsForeground').listen((event) {
+      text = "service foreground";
       service.setAsForegroundService();
     });
     service.on('setAsBackground').listen((event) {
       service.setAsBackgroundService();
+      text = "service background";
     });
   }
 
   service.on('setAsStop').listen((event) {
     service.stopSelf();
   });
-
+  var index = 1;
   Timer.periodic(
     Duration(seconds: 1),
     (timer) async {
-      // if (service is AndroidServiceInstance) {
-      //   if (await service.isForegroundService()) {
-      //     service.setForegroundNotificationInfo(
-      //       title: "Foreground Service",
-      //       content: "Service is running",
-      //     );
-      //   }
-      // }
-      print("Background service running");
+      print(index);
+      if (service is AndroidServiceInstance) {
+        if (index == 10) {
+          NotificationService.showNotification(
+              23, "haiii", "notif ini sepol", "content");
+          index = 1;
+        }
+        index++;
+        // service.setForegroundNotificationInfo(
+        //     title: "title", content: "content");
+        //   // print("object");
+      }
+      print(text);
       service.invoke("update");
     },
   );

@@ -50,9 +50,7 @@ class HomeView extends GetView<HomeController> {
             ElevatedButton(
               onPressed: () {
                 NotificationService.showNotification(
-                  title: 'Notifikasi Test',
-                  body: 'Ini adalah notifikasi test!',
-                );
+                    23, "haiii", "notif ini sepol", "content");
               },
               child: const Text('Tampilkan Notifikasi'),
             ),
