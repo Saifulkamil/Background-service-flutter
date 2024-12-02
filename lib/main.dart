@@ -25,8 +25,10 @@ Future<void> main() async {
   runApp(
     GetMaterialApp(
       title: "Application",
+      navigatorKey: Get.key,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
     ),
   );
+   homeC.listenToNotifications();
 }

@@ -41,18 +41,18 @@ class NotificationService {
 
   static Future<void> showNotification(
       int id, String? title, String? body, String? payload) async {
-    final imageicon = await Utils.downloadFile(
-        'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR2f1n0xOHEDlEMVLH0Tdv0PIYeKk3FzgG3ShEpkqrStTsxpYN4',
-        'notification_Icon.jpg');
-    final imagePath = await Utils.downloadFile(
-        'https://digiagri.digibizdev.online/assets/img/logo_dark.png',
-        'notification_image.jpg');
+    // final imageicon = await Utils.downloadFile(
+    //     'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR2f1n0xOHEDlEMVLH0Tdv0PIYeKk3FzgG3ShEpkqrStTsxpYN4',
+    //     'notification_Icon.jpg');
+    // final imagePath = await Utils.downloadFile(
+    //     'https://digiagri.digibizdev.online/assets/img/logo_dark.png',
+    //     'notification_image.jpg');
 
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
-      styleInformation: BigPictureStyleInformation(
-          FilePathAndroidBitmap(imagePath),
-          largeIcon: FilePathAndroidBitmap(imageicon)),
+      // styleInformation: BigPictureStyleInformation(
+      //     FilePathAndroidBitmap(imagePath),
+      //     largeIcon: FilePathAndroidBitmap(imageicon)),
       'your_channel_id',
       'your_channel_name',
       channelDescription: 'Your channel description',
